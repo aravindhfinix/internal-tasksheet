@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { Session } from '../modules/v1/employee/models/session-model';
 
 const ENCRYPTION_KEY = process.env.SC_ENCRYPTION_KEY || 'agdjhjdhfjdjshkjgfghnbjkggnhhnbv'; // Must be 256 bits (32 characters)
 const IV_LENGTH = 16; // For AES, this is always 16
@@ -29,4 +30,27 @@ export function decrypt(text, encryptionKey = ENCRYPTION_KEY) {
       console.log("error in decrypt")
     }
   }
+}
+
+
+export const createSession=(user)=>{
+  return new Promise((resolve, reject) => {
+    let tokenParams = {
+      user: user,
+      time: new Date().valueOf()
+    }
+    const sessionParam = {
+      session_token: encrypt(JSON.stringify(tokenParams)),
+      user_id: user._id,
+    };
+
+    const session = new Session(sessionParam);
+    session.save((error, _session) => {
+      if (error) {
+        reject(error.message);
+      } else {
+        resolve(_session);
+      }
+    });
+  });
 }

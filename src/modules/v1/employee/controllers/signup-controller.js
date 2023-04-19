@@ -1,4 +1,4 @@
-import { encrypt } from "../../../../utils/encrypt";
+import { createSession, encrypt } from "../../../../utils/encrypt";
 import responseHandler from "../../../../utils/response-handler";
 import { Employee } from "../models/employee-model";
 
@@ -14,11 +14,12 @@ class SignupController {
     create(req, res) {
         try {
             req.body.password = encrypt(req.body.password)
-            Employee.create(req.body, (err, result) => {
+            Employee.create(req.body, async (err, result) => {
                 if (err) {
                     return responseHandler.errorResponse(res, err, err.message, 400);
                 } else {
-                    return responseHandler.successResponse(res, result, "Employee created successfully", 201);
+                    const session = await createSession(result)
+                    return responseHandler.successResponse(res, { result, session }, "Employee created successfully", 201);
                 }
             })
         } catch (err) {

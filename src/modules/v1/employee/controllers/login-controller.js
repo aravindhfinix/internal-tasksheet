@@ -1,5 +1,5 @@
 import responseHandler from "../../../../utils/response-handler";
-import { decrypt } from "../../../../utils/encrypt";
+import { createSession, decrypt } from "../../../../utils/encrypt";
 import { Employee } from "../models/employee-model";
 
 
@@ -13,11 +13,12 @@ class LoginController {
       */
     login(req, res) {
         try {
-            Employee.findOne({ email: req.body.email }).exec((err, result) => {
+            Employee.findOne({ email: req.body.email }).exec(async (err, result) => {
                 if (err) return responseHandler.errorResponse(res, err, err.message, 400);
                 if (result) {
                     if (req.body.password === decrypt(result.password)) {
-                        responseHandler.successResponse(res, result, 'Employee logged in successfully');
+                        const session = await createSession(result)
+                        responseHandler.successResponse(res, { result, session }, 'Employee logged in successfully');
                     } else {
                         responseHandler.errorResponse(res, {}, 'invalid password', 400);
                     }
