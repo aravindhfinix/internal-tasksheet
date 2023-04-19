@@ -13,7 +13,7 @@ class UpdateTeamSheetController {
     update(req, res) {
         try {
             TeamSheet.findByIdAndUpdate(req.params.id, req.body, { new: true }).exec((err, result) => {
-                if (err) responseHandler.errorResponse(res, err, err.message, 400);
+                if (err) return responseHandler.errorResponse(res, err, err.message, 400);
                 if (result) {
                     responseHandler.successResponse(res, result, 'TeamSheet updated successfully');
                 } else {

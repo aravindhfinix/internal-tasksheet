@@ -13,7 +13,6 @@ class FilterTeamSheetController {
     async list(req, res) {
         try {
             let search = await searchParams(req.query)
-            console.log(search)
             TeamSheet.find(search).populate('employee_id project_id').exec((err, result) => {
                 if (err) return responseHandler.errorResponse(res, err, err.message, 400);
                 if (result != 0) {

@@ -15,7 +15,7 @@ class CreateEmployeeProjectController {
     create(req, res) {
         try {
             EmployeeProject.create(req.body, (err, result) => {
-                if (err) responseHandler.errorResponse(res, err, err.message, 400);
+                if (err) return responseHandler.errorResponse(res, err, err.message, 400);
                 if (result) {
                     responseHandler.successResponse(res, result, 'EmployeeProject created successfully');
                 } else {

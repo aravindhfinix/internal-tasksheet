@@ -14,7 +14,7 @@ class UpdateEmployeeProjectController {
     update(req, res) {
         try {
             EmployeeProject.findByIdAndUpdate(req.params.id, { project_id: req.body.project_id }, { new: true }).exec((err, result) => {
-                if (err) responseHandler.errorResponse(res, err, err.message, 400);
+                if (err) return responseHandler.errorResponse(res, err, err.message, 400);
                 if (result) {
                     responseHandler.successResponse(res, result, 'EmployeeProject updated successfully');
                 } else {

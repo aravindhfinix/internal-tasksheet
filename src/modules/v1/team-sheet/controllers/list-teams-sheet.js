@@ -13,7 +13,7 @@ class ListTeamSheetController {
     list(req, res) {
         try {
             TeamSheet.find().populate('employee_id project_id').exec((err, result) => {
-                if (err) responseHandler.errorResponse(res, err, err.message, 400);
+                if (err) return responseHandler.errorResponse(res, err, err.message, 400);
                 if (result.length != 0) {
                     responseHandler.successResponse(res, result, 'TeamSheets retrived successfully');
                 } else {

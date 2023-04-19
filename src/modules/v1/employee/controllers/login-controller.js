@@ -14,7 +14,7 @@ class LoginController {
     login(req, res) {
         try {
             Employee.findOne({ email: req.body.email }).exec((err, result) => {
-                if (err) responseHandler.errorResponse(res, {}, err.message, 400);
+                if (err) return responseHandler.errorResponse(res, err, err.message, 400);
                 if (result) {
                     if (req.body.password === decrypt(result.password)) {
                         responseHandler.successResponse(res, result, 'Employee logged in successfully');

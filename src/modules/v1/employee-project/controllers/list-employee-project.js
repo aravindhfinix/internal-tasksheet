@@ -14,7 +14,7 @@ class ListEmployeeProjectController {
     list(req, res) {
         try {
             EmployeeProject.find().populate('employee_id project_id').exec((err, result) => {
-                if (err) responseHandler.errorResponse(res, err, err.message, 400);
+                if (err) return responseHandler.errorResponse(res, err, err.message, 400);
                 if (result.length != 0) {
                     responseHandler.successResponse(res, result, 'EmployeeProjects retrived successfully');
                 } else {

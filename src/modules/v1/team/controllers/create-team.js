@@ -15,7 +15,7 @@ class CreateTeamController {
     create(req, res) {
         try {
             Team.create(req.body, (err, result) => {
-                if (err) responseHandler.errorResponse(res, err, err.message, 400);
+                if (err) return responseHandler.errorResponse(res, err, err.message, 400);
                 if (result) {
                     responseHandler.successResponse(res, result, 'Team created successfully');
                 } else {

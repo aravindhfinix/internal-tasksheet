@@ -14,7 +14,7 @@ class GetEmployeeProjectController {
     get(req, res) {
         try {
             EmployeeProject.findOne({ employee_id: req.params.id }).exec((err, result) => {
-                if (err) responseHandler.errorResponse(res, err, err.message, 400);
+                if (err) return responseHandler.errorResponse(res, err, err.message, 400);
                 if (result) {
                     responseHandler.successResponse(res, result, 'EmployeeProject retrived successfully');
                 } else {

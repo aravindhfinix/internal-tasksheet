@@ -13,7 +13,6 @@ class UserLogoutController {
     logout(req, res) {
         try {
             responseHandler.successResponse(res,{}, 'User Logged Out successfully');
-
         } catch (err) {
             responseHandler.errorResponse(res, err);
         }
